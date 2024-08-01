@@ -13,4 +13,4 @@ class ContactData {
       required this.number});
 }
 
-ValueNotifier<List<dynamic>> contactDataList = ValueNotifier([]);
+ValueNotifier<List<ContactData>> contactDataList = ValueNotifier([]);

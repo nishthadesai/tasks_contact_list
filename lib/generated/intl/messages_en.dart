@@ -55,15 +55,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "connectionToServerFailedDueToInternetConnection":
             MessageLookupByLibrary.simpleMessage(
                 "Connection to server failed due to internet connection."),
+        "contactDeletedSuccesfully":
+            MessageLookupByLibrary.simpleMessage("Contact Deleted Succesfully"),
+        "contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
         "cvv": MessageLookupByLibrary.simpleMessage("Cvv"),
         "cvvIsInvalid": MessageLookupByLibrary.simpleMessage("CVV is invalid"),
         "dashboard": MessageLookupByLibrary.simpleMessage("Dashboard"),
         "dataNotFound": MessageLookupByLibrary.simpleMessage("Data not found"),
         "databaseException":
             MessageLookupByLibrary.simpleMessage("Database exception"),
+        "deleteContact": MessageLookupByLibrary.simpleMessage("Delete Contact"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don\"t have an account?"),
+        "editContact": MessageLookupByLibrary.simpleMessage("Edit Contact"),
+        "editPhoto": MessageLookupByLibrary.simpleMessage("Edit Photo"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailAddress": MessageLookupByLibrary.simpleMessage("Email Address"),
         "enterCardName":
@@ -169,6 +175,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickVideo": MessageLookupByLibrary.simpleMessage("Pick Video"),
         "pickedFileCount":
             MessageLookupByLibrary.simpleMessage("Picked file count: "),
+        "pleaseAddAPhoto":
+            MessageLookupByLibrary.simpleMessage("Please add a photo"),
         "pleaseCheckInternetConnection": MessageLookupByLibrary.simpleMessage(
             "Please check internet connection"),
         "pleaseCheckYourInternetConnection":

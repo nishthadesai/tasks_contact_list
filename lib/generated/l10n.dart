@@ -1289,6 +1289,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Contacts`
+  String get contacts {
+    return Intl.message(
+      'Contacts',
+      name: 'contacts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Contact`
+  String get editContact {
+    return Intl.message(
+      'Edit Contact',
+      name: 'editContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please add a photo`
+  String get pleaseAddAPhoto {
+    return Intl.message(
+      'Please add a photo',
+      name: 'pleaseAddAPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Photo`
+  String get editPhoto {
+    return Intl.message(
+      'Edit Photo',
+      name: 'editPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Deleted Succesfully`
+  String get contactDeletedSuccesfully {
+    return Intl.message(
+      'Contact Deleted Succesfully',
+      name: 'contactDeletedSuccesfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Contact`
+  String get deleteContact {
+    return Intl.message(
+      'Delete Contact',
+      name: 'deleteContact',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

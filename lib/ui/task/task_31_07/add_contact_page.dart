@@ -67,14 +67,16 @@ class _AddContactPageState extends State<AddContactPage> {
             appRouter.maybePop();
           },
           child: Text(
-            "Cancel",
+            S.of(context).cancel,
             style: textRegular.copyWith(
                 fontSize: 14.spMin, color: Colors.indigoAccent),
           ).wrapPaddingLeft(5),
         ),
       ),
       titleWidget: Text(
-        S.of(context).newContact,
+        widget.index != null
+            ? S.of(context).editContact
+            : S.of(context).newContact,
         style: textMedium.copyWith(color: Colors.black),
       ),
       action: [
@@ -104,9 +106,8 @@ class _AddContactPageState extends State<AddContactPage> {
                   //     updatedList; //for notify to list bcz it directly can't notify
                 }
                 contactDataList.notifyListeners();
-                print("----------------hyy--------------------------");
               } else {
-                showMessage("Please add a photo");
+                showMessage(S.of(context).pleaseAddAPhoto);
               }
             }
           },
@@ -124,6 +125,7 @@ class _AddContactPageState extends State<AddContactPage> {
 
   Widget buildView() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         10.verticalSpace,
@@ -158,15 +160,19 @@ class _AddContactPageState extends State<AddContactPage> {
           onTap: () {
             _pickImageFromCamera();
           },
-          child: Container(
-            decoration: BoxDecoration(
-                color: AppColor.grey.withOpacity(0.40),
-                borderRadius: BorderRadius.circular(15).r),
-            child: Text(
-              S.of(context).addPhoto,
-              style: textMedium.copyWith(
-                  fontSize: 14.spMin, color: AppColor.black),
-            ).wrapPaddingSymmetric(vertical: 5, horizontal: 15),
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AppColor.grey.withOpacity(0.40),
+                  borderRadius: BorderRadius.circular(15).r),
+              child: Text(
+                widget.index != null
+                    ? S.of(context).editPhoto
+                    : S.of(context).addPhoto,
+                style: textMedium.copyWith(
+                    fontSize: 14.spMin, color: AppColor.black),
+              ).wrapPaddingSymmetric(vertical: 5, horizontal: 15),
+            ),
           ),
         ),
         15.verticalSpace,
@@ -174,6 +180,49 @@ class _AddContactPageState extends State<AddContactPage> {
           key: formKey,
           child: buildContactForm(),
         ),
+        25.verticalSpace,
+        widget.index != null
+            ? GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Are you sure! you want to delete?"),
+                        actions: [
+                          TextButton(
+                            child: Text("Cancel"),
+                            onPressed: () {
+                              appRouter.maybePop();
+                            },
+                          ),
+                          TextButton(
+                            child: Text("ok"),
+                            onPressed: () {
+                              contactDataList.value.removeAt(widget.index!);
+                              contactDataList.notifyListeners();
+                              appRouter.replaceAll([ContactListRoute()]);
+                              showMessage(
+                                  S.of(context).contactDeletedSuccesfully);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: AppColor.grey.withOpacity(0.40),
+                      borderRadius: BorderRadius.circular(15).r),
+                  child: Text(
+                    S.of(context).deleteContact,
+                    style: textMedium.copyWith(
+                        fontSize: 14.spMin, color: AppColor.red),
+                  ).wrapPaddingSymmetric(vertical: 5, horizontal: 15),
+                ).wrapPaddingRight(10),
+              )
+            : SizedBox.shrink(),
       ],
     );
   }

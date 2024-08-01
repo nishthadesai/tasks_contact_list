@@ -127,5 +127,11 @@
   "pleaseEnterValidPhoneNumber": "Please enter valid phone number",
   "pleaseEnterPhoneNumber": "Please enter phone number",
   "noContactsYet": "No contacts yet",
-  "done": "Done"
+  "done": "Done",
+  "contacts": "Contacts",
+  "editContact": "Edit Contact",
+  "pleaseAddAPhoto": "Please add a photo",
+  "editPhoto": "Edit Photo",
+  "contactDeletedSuccesfully": "Contact Deleted Succesfully",
+  "deleteContact": "Delete Contact"
 }

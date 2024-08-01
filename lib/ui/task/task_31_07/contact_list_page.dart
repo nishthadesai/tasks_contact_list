@@ -64,13 +64,30 @@ class _ContactListPageState extends State<ContactListPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Contacts",
+            S.of(context).contacts,
             style: textBold.copyWith(fontSize: 26.spMin, color: AppColor.black),
           ),
           15.verticalSpace,
           SizedBox(
             height: 30.r,
             child: AppTextField(
+              onSubmit: (value) {
+                for (var contact in contactDataList.value) {
+                  String firstName = contact.firstName;
+                  if (firstName == searchController.text) {
+                    List<ContactData> searchedContactList =
+                        contactDataList.value.where((contact) {
+                      return contactDataList.value.contains(firstName);
+                    }).toList();
+                    ;
+                  }
+                }
+              },
+              onChanged: (val) {
+                setState(() {
+                  searchController.text = val!;
+                });
+              },
               decoration: InputDecoration(
                 prefixIcon: Icon(
                   Icons.search,
@@ -94,7 +111,7 @@ class _ContactListPageState extends State<ContactListPage> {
                 fillColor: AppColor.grey.withOpacity(0.10),
               ),
               keyboardType: TextInputType.name,
-              keyboardAction: TextInputAction.done,
+              keyboardAction: TextInputAction.search,
               textCapitalization: TextCapitalization.none,
               controller: searchController,
               label: '',
@@ -109,69 +126,108 @@ class _ContactListPageState extends State<ContactListPage> {
   }
 
   Widget buildContactList() {
-    return ValueListenableBuilder(
-      valueListenable: contactDataList,
-      builder: (context, value, child) {
-        return value.isNotEmpty
-            ? Column(
-                children: List.generate(
-                  value.length,
-                  (index) {
-                    ContactData data = contactDataList.value[index];
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+    return searchController.text != ""
+        ? Text("No Contacts found")
+        : ValueListenableBuilder(
+            valueListenable: contactDataList,
+            builder: (context, value, child) {
+              final groupSortedContacts = sortAndGroupContacts();
+              List<Widget> contactWidgets = [];
+              groupSortedContacts.forEach((letter, contacts) {
+                contactWidgets.add(
+                  Text(
+                    letter,
+                    style: textMedium.copyWith(
+                      fontSize: 16.spMin,
+                      color: AppColor.black,
+                    ),
+                  ),
+                );
+
+                contactWidgets.add(Divider());
+
+                for (var contact in contacts) {
+                  contactWidgets.add(
+                    Column(
                       children: [
-                        Text(data.firstName.split('').first),
-                        Divider(),
                         GestureDetector(
                           onTap: () {
                             appRouter.push(
-                              AddContactRoute(contactData: data, index: index),
+                              AddContactRoute(
+                                  contactData: contact,
+                                  index: value.indexOf(contact)),
                             );
                           },
                           child: ListTile(
                             hoverColor: AppColor.transparent,
                             splashColor: AppColor.transparent,
                             contentPadding: EdgeInsets.zero,
-                            minTileHeight: 50,
+                            minTileHeight: 40,
                             title: Text(
-                              "${data.firstName.toTitleCase()} ${data.lastName.toTitleCase()}",
+                              "${contact.firstName.toTitleCase()} ${contact.lastName.toTitleCase()}",
                               style: textMedium.copyWith(
-                                  fontSize: 14.spMin, color: AppColor.black),
+                                fontSize: 14.spMin,
+                                color: AppColor.black,
+                              ),
                             ),
                             leading: AppImage(
                               radius: 16.r,
-                              file: data.Image,
+                              file: contact.Image,
                             ),
                             subtitle: Text(
-                              "${data.number}",
+                              "${contact.number}",
                               style: textMedium.copyWith(
                                 fontSize: 12.spMin,
                                 color: AppColor.black.withOpacity(0.80),
                               ),
-                            ),
+                            ).wrapPaddingTop(5),
                           ),
                         ),
+                        Divider(),
                       ],
-                    ).wrapPaddingBottom(10);
-                  },
-                ),
-              )
-            : Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                        child: Text(
-                      S.of(context).noContactsYet,
-                      style: textMedium.copyWith(
-                          fontSize: 16.spMin, color: AppColor.black),
-                    )),
-                  ],
-                ),
-              );
-      },
-    );
+                    ),
+                  );
+                }
+              });
+
+              return contactWidgets.isNotEmpty
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: contactWidgets,
+                    )
+                  : Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Text(
+                              S.of(context).noContactsYet,
+                              style: textMedium.copyWith(
+                                fontSize: 16.spMin,
+                                color: AppColor.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+            },
+          );
+  }
+
+  Map<String, List<ContactData>> sortAndGroupContacts() {
+    contactDataList.value.sort((a, b) => a.firstName.compareTo(b.firstName));
+
+    Map<String, List<ContactData>> groupedContacts = {};
+    for (var contact in contactDataList.value) {
+      String firstLetter = contact.firstName[0].toUpperCase();
+      if (groupedContacts[firstLetter] == null) {
+        groupedContacts[firstLetter] = [];
+      }
+      groupedContacts[firstLetter]!.add(contact);
+    }
+
+    return groupedContacts;
   }
 
   @override
