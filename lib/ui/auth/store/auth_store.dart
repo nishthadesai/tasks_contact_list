@@ -18,9 +18,9 @@ import 'package:mobx/mobx.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../data/repository_impl/auth_repo_impl.dart';
 import '../../../core/api/base_response/fb_user_data.dart';
 import '../../../core/db/app_db.dart';
+import '../../../data/repository_impl/auth_repo_impl.dart';
 
 part 'auth_store.g.dart';
 
