@@ -133,5 +133,9 @@
   "pleaseAddAPhoto": "Please add a photo",
   "editPhoto": "Edit Photo",
   "contactDeletedSuccesfully": "Contact Deleted Succesfully",
-  "deleteContact": "Delete Contact"
+  "deleteContact": "Delete Contact",
+  "noContactsFound": "No Contacts found",
+  "areYouSureYouWantToDelete": "Are you sure! you want to delete?",
+  "selectAll": "Select all",
+  "delete": "Delete"
 }

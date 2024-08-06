@@ -1349,6 +1349,46 @@ class S {
       args: [],
     );
   }
+
+  /// `No Contacts found`
+  String get noContactsFound {
+    return Intl.message(
+      'No Contacts found',
+      name: 'noContactsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure! you want to delete?`
+  String get areYouSureYouWantToDelete {
+    return Intl.message(
+      'Are you sure! you want to delete?',
+      name: 'areYouSureYouWantToDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select all`
+  String get selectAll {
+    return Intl.message(
+      'Select all',
+      name: 'selectAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -32,6 +32,7 @@ class _AddContactPageState extends State<AddContactPage> {
   TextEditingController phoneController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   ValueNotifier<String> path = ValueNotifier("");
+
   @override
   void initState() {
     if (widget.contactData != null) {
@@ -47,15 +48,17 @@ class _AddContactPageState extends State<AddContactPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.gray,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: buildAppBar(),
-      ),
+      appBar: buildAppBar(),
       body: buildView(),
     );
   }
 
-  Widget buildAppBar() {
+  /**
+   * Use for appbar UI
+   * API:- getLogin()
+   * PARAM:- username, password
+   */
+  buildAppBar() {
     return BaseAppBar(
       backgroundColor: AppColor.gray,
       showTitle: true,
@@ -88,7 +91,7 @@ class _AddContactPageState extends State<AddContactPage> {
                 //     List.from(contactDataList.value);
                 if (widget.index != null) {
                   contactDataList.value[widget.index!] = ContactData(
-                    Image: path.value,
+                    Image: File(path.value),
                     firstName: firstNameController.text,
                     lastName: lastNameController.text,
                     number: phoneController.text,
@@ -96,7 +99,7 @@ class _AddContactPageState extends State<AddContactPage> {
                   appRouter.maybePop();
                 } else {
                   contactDataList.value.add(ContactData(
-                    Image: path.value,
+                    Image: File(path.value),
                     firstName: firstNameController.text,
                     lastName: lastNameController.text,
                     number: phoneController.text,
@@ -124,106 +127,108 @@ class _AddContactPageState extends State<AddContactPage> {
   }
 
   Widget buildView() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        10.verticalSpace,
-        ValueListenableBuilder(
-          valueListenable: path,
-          builder: (context, value, child) {
-            return Center(
-              child: path.value != ""
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.file(
-                        File(path.value),
-                        height: 125.r,
-                        width: 125.r,
-                        fit: BoxFit.fill,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          10.verticalSpace,
+          ValueListenableBuilder(
+            valueListenable: path,
+            builder: (context, value, child) {
+              return Center(
+                child: path.value != ""
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.file(
+                          File(path.value),
+                          height: 125.r,
+                          width: 125.r,
+                          fit: BoxFit.fill,
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.asset(
+                          Assets.imageProfile,
+                          height: 125.r,
+                          width: 125.w,
+                          fit: BoxFit.fill,
+                        ),
                       ),
-                    )
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset(
-                        Assets.imageProfile,
-                        height: 125.r,
-                        width: 125.w,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-            );
-          },
-        ),
-        10.verticalSpace,
-        GestureDetector(
-          onTap: () {
-            _pickImageFromCamera();
-          },
-          child: Center(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: AppColor.grey.withOpacity(0.40),
-                  borderRadius: BorderRadius.circular(15).r),
-              child: Text(
-                widget.index != null
-                    ? S.of(context).editPhoto
-                    : S.of(context).addPhoto,
-                style: textMedium.copyWith(
-                    fontSize: 14.spMin, color: AppColor.black),
-              ).wrapPaddingSymmetric(vertical: 5, horizontal: 15),
+              );
+            },
+          ),
+          10.verticalSpace,
+          GestureDetector(
+            onTap: () {
+              _pickImageFromCamera();
+            },
+            child: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColor.grey.withOpacity(0.40),
+                    borderRadius: BorderRadius.circular(15).r),
+                child: Text(
+                  widget.index != null
+                      ? S.of(context).editPhoto
+                      : S.of(context).addPhoto,
+                  style: textMedium.copyWith(
+                      fontSize: 14.spMin, color: AppColor.black),
+                ).wrapPaddingSymmetric(vertical: 5, horizontal: 15),
+              ),
             ),
           ),
-        ),
-        15.verticalSpace,
-        Form(
-          key: formKey,
-          child: buildContactForm(),
-        ),
-        25.verticalSpace,
-        widget.index != null
-            ? GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text("Are you sure! you want to delete?"),
-                        actions: [
-                          TextButton(
-                            child: Text("Cancel"),
-                            onPressed: () {
-                              appRouter.maybePop();
-                            },
-                          ),
-                          TextButton(
-                            child: Text("ok"),
-                            onPressed: () {
-                              contactDataList.value.removeAt(widget.index!);
-                              contactDataList.notifyListeners();
-                              appRouter.replaceAll([ContactListRoute()]);
-                              showMessage(
-                                  S.of(context).contactDeletedSuccesfully);
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: AppColor.grey.withOpacity(0.40),
-                      borderRadius: BorderRadius.circular(15).r),
-                  child: Text(
-                    S.of(context).deleteContact,
-                    style: textMedium.copyWith(
-                        fontSize: 14.spMin, color: AppColor.red),
-                  ).wrapPaddingSymmetric(vertical: 5, horizontal: 15),
-                ).wrapPaddingRight(10),
-              )
-            : SizedBox.shrink(),
-      ],
+          15.verticalSpace,
+          Form(
+            key: formKey,
+            child: buildContactForm(),
+          ),
+          25.verticalSpace,
+          widget.index != null
+              ? GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(S.of(context).areYouSureYouWantToDelete),
+                          actions: [
+                            TextButton(
+                              child: Text(S.of(context).cancel),
+                              onPressed: () {
+                                appRouter.maybePop();
+                              },
+                            ),
+                            TextButton(
+                              child: Text(S.of(context).ok),
+                              onPressed: () {
+                                contactDataList.value.removeAt(widget.index!);
+                                contactDataList.notifyListeners();
+                                appRouter.replaceAll([ContactListRoute()]);
+                                showMessage(
+                                    S.of(context).contactDeletedSuccesfully);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: AppColor.grey.withOpacity(0.40),
+                        borderRadius: BorderRadius.circular(15).r),
+                    child: Text(
+                      S.of(context).deleteContact,
+                      style: textMedium.copyWith(
+                          fontSize: 14.spMin, color: AppColor.red),
+                    ).wrapPaddingSymmetric(vertical: 5, horizontal: 15),
+                  ).wrapPaddingRight(10),
+                )
+              : SizedBox.shrink(),
+        ],
+      ),
     );
   }
 
@@ -308,6 +313,7 @@ class _AddContactPageState extends State<AddContactPage> {
     firstNameController.dispose();
     lastNameController.dispose();
     phoneController.dispose();
+    path.dispose();
     super.dispose();
   }
 }

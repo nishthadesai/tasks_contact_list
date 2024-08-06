@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "and": MessageLookupByLibrary.simpleMessage(" and "),
         "applicationTitle":
             MessageLookupByLibrary.simpleMessage("Flutter Demo Structure"),
+        "areYouSureYouWantToDelete": MessageLookupByLibrary.simpleMessage(
+            "Are you sure! you want to delete?"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -64,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataNotFound": MessageLookupByLibrary.simpleMessage("Data not found"),
         "databaseException":
             MessageLookupByLibrary.simpleMessage("Database exception"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteContact": MessageLookupByLibrary.simpleMessage("Delete Contact"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "dontHaveAccount":
@@ -154,6 +157,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noActiveInternetConnection": MessageLookupByLibrary.simpleMessage(
             "No Active Internet Connection"),
+        "noContactsFound":
+            MessageLookupByLibrary.simpleMessage("No Contacts found"),
         "noContactsYet":
             MessageLookupByLibrary.simpleMessage("No contacts yet"),
         "numberIsInvalid":
@@ -200,6 +205,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "responseNull":
             MessageLookupByLibrary.simpleMessage("Response is null"),
         "search": MessageLookupByLibrary.simpleMessage("Search..."),
+        "selectAll": MessageLookupByLibrary.simpleMessage("Select all"),
         "selectYourPhoneCode":
             MessageLookupByLibrary.simpleMessage("Select your phone code"),
         "sendTimeout": MessageLookupByLibrary.simpleMessage("Send timeout"),

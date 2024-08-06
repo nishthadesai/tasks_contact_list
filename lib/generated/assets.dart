@@ -9,6 +9,7 @@ class Assets {
   static const String imageCheckedBox = 'assets/image/checked_box.png';
   static const String imageEmail = 'assets/image/email.png';
   static const String imageMobile = 'assets/image/mobile.png';
+  static const String imageNoDataFound = 'assets/image/no_data_found.gif';
   static const String imagePassword = 'assets/image/password.png';
   static const String imageProfile = 'assets/image/profile.png';
   static const String imageUser = 'assets/image/user.png';
