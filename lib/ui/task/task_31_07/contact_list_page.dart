@@ -73,13 +73,34 @@ class _ContactListPageState extends State<ContactListPage> {
                                           TextButton(
                                             child: Text(S.of(context).ok),
                                             onPressed: () {
-                                              setState(() {
-                                                contactDataList
-                                                    .notifyListeners();
-                                                appRouter.maybePop();
-                                                isAllSelected.value = false;
-                                                isPressed.value = false;
-                                              });
+                                              List<int> checkedIndices =
+                                                  getCheckedIndices();
+                                              if (checkedIndices.isNotEmpty) {
+                                                setState(() {
+                                                  contactDataList.value
+                                                      .removeWhere((contact) {
+                                                    int index = contactDataList
+                                                        .value
+                                                        .indexOf(contact);
+                                                    return checkedIndices
+                                                        .contains(index);
+                                                  });
+                                                  contactDataList
+                                                      .notifyListeners();
+                                                  appRouter.maybePop();
+                                                  isAllSelected.value = false;
+                                                  isAnySelected.value = false;
+                                                  isPressed.value = false;
+                                                  for (var contact
+                                                      in contactDataList
+                                                          .value) {
+                                                    int index = contactDataList
+                                                        .value
+                                                        .indexOf(contact);
+                                                    print("--------${index}");
+                                                  }
+                                                });
+                                              }
                                             },
                                           ),
                                         ],
@@ -117,14 +138,17 @@ class _ContactListPageState extends State<ContactListPage> {
 
   Future<bool> _onWillPop() async {
     if (isPressed.value) {
+      setState(() {});
+      checkboxStates = List.generate(
+          contactDataList.value.length, (_) => ValueNotifier(false));
+
       isPressed.value = false;
       isAllSelected.value = false;
       isAnySelected.value = false;
-      checkboxStates = List.generate(
-          contactDataList.value.length, (_) => ValueNotifier(false));
-      return false; // Prevents the default back button behavior
+
+      return false;
     }
-    return true; // Allows the default back button behavior
+    return true;
   }
 
   buildAppBar() {
@@ -220,6 +244,7 @@ class _ContactListPageState extends State<ContactListPage> {
       child: AppTextField(
         onChanged: (val) {
           if (val != null) {
+            print(val);
             setState(() {
               searchedContactList = contactDataList.value.where((contact) {
                 String name =
@@ -349,124 +374,159 @@ class _ContactListPageState extends State<ContactListPage> {
                     ),
                   );
 
-                  contactWidgets.add(Divider());
+                  contactWidgets.add(
+                    Divider(
+                      height: 0,
+                    ),
+                  );
 
                   for (var contact in contacts) {
                     contactWidgets.add(
                       Column(
                         children: [
                           ValueListenableBuilder(
-                            valueListenable: isPressed,
-                            builder: (context, isPressValue, child) {
-                              return GestureDetector(
-                                onTap: () {
-                                  if (!isPressed.value) {
-                                    appRouter.push(
-                                      AddContactRoute(
-                                          contactData: contact,
-                                          index: list.indexOf(contact)),
-                                    );
-                                  }
-                                },
-                                onLongPress: () {
-                                  isPressed.value = true;
-                                  isAnySelected.value = true;
-                                  if (isPressed.value == true) {
-                                    checkboxStates[list.indexOf(contact)] =
-                                        ValueNotifier(true);
-                                  }
-                                },
-                                child: ListTile(
-                                  hoverColor: AppColor.transparent,
-                                  splashColor: AppColor.transparent,
-                                  contentPadding: EdgeInsets.zero,
-                                  minTileHeight: 40,
-                                  title: Text(
-                                    "${contact.firstName.toTitleCase()} ${contact.lastName.toTitleCase()}",
-                                    style: textMedium.copyWith(
-                                      fontSize: 14.spMin,
-                                      color: AppColor.black,
-                                    ),
-                                  ),
-                                  leading: contact.Image is File
-                                      ? ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50).r,
-                                          child: Image.file(
-                                            fit: BoxFit.fill,
-                                            contact.Image,
-                                            height: 35.r,
-                                            width: 35.w,
-                                          ),
-                                        )
-                                      : ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50).r,
-                                          child: Image.asset(
-                                            fit: BoxFit.fill,
-                                            contact.Image,
-                                            height: 35.r,
-                                            width: 35.w,
-                                          ),
-                                        ),
-                                  subtitle: Text(
-                                    "${contact.number}",
-                                    style: textMedium.copyWith(
-                                      fontSize: 12.spMin,
-                                      color: AppColor.black.withOpacity(0.80),
-                                    ),
-                                  ).wrapPaddingTop(5),
-                                  trailing: isPressed.value
-                                      ? ValueListenableBuilder(
-                                          valueListenable: isAllSelected,
-                                          builder: (context, value, child) {
-                                            return ValueListenableBuilder<bool>(
-                                              valueListenable: checkboxStates[
-                                                  list.indexOf(contact)],
-                                              builder:
-                                                  (context, isChecked, child) {
-                                                return Checkbox(
-                                                  activeColor:
-                                                      Colors.indigoAccent,
-                                                  shape: CircleBorder(
-                                                      eccentricity: 0.1.r),
-                                                  onChanged: (val) {
-                                                    checkboxStates[list
-                                                            .indexOf(contact)]
-                                                        .value = val ?? false;
-                                                    isAllSelected.value = false;
-                                                    bool allTrue =
-                                                        checkboxStates.every(
-                                                            (notifier) =>
-                                                                notifier.value);
-                                                    if (allTrue) {
-                                                      isAllSelected.value =
-                                                          true;
-                                                    }
-                                                    bool containsTrue =
-                                                        checkboxStates.any(
-                                                            (notifier) =>
-                                                                notifier.value);
-                                                    if (containsTrue) {
-                                                      isAnySelected.value =
-                                                          true;
-                                                    } else {
-                                                      isAnySelected.value =
-                                                          false;
-                                                    }
-                                                  },
-                                                  value: isChecked,
-                                                );
-                                              },
+                            valueListenable: isAllSelected,
+                            builder: (context, value, child) {
+                              return ValueListenableBuilder(
+                                valueListenable:
+                                    checkboxStates[list.indexOf(contact)],
+                                builder: (context, value, child) {
+                                  return ValueListenableBuilder(
+                                    valueListenable: isPressed,
+                                    builder: (context, isPressValue, child) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          if (!isPressed.value) {
+                                            appRouter.push(
+                                              AddContactRoute(
+                                                  contactData: contact,
+                                                  index: list.indexOf(contact)),
                                             );
-                                          },
-                                        )
-                                      : null,
-                                ),
+                                          }
+                                        },
+                                        onLongPress: () {
+                                          isPressed.value = true;
+                                          isAnySelected.value = true;
+                                          if (isPressed.value == true) {
+                                            checkboxStates[
+                                                    list.indexOf(contact)] =
+                                                ValueNotifier(true);
+                                          }
+                                        },
+                                        child: ListTile(
+                                          tileColor: value != false ||
+                                                  isAllSelected.value
+                                              ? Colors.grey.withOpacity(0.25)
+                                              : AppColor.white,
+                                          contentPadding: EdgeInsets.zero,
+                                          minTileHeight: 40,
+                                          title: Text(
+                                            "${contact.firstName.toTitleCase()} ${contact.lastName.toTitleCase()}",
+                                            style: textMedium.copyWith(
+                                              fontSize: 14.spMin,
+                                              color: AppColor.black,
+                                            ),
+                                          ).wrapPaddingTop(10),
+                                          leading: contact.Image is File
+                                              ? ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50)
+                                                          .r,
+                                                  child: Image.file(
+                                                    fit: BoxFit.fill,
+                                                    contact.Image,
+                                                    height: 35.r,
+                                                    width: 35.w,
+                                                  ),
+                                                )
+                                              : ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50)
+                                                          .r,
+                                                  child: Image.asset(
+                                                    fit: BoxFit.fill,
+                                                    contact.Image,
+                                                    height: 35.r,
+                                                    width: 35.w,
+                                                  ),
+                                                ),
+                                          subtitle: Text(
+                                            "${contact.number}",
+                                            style: textMedium.copyWith(
+                                              fontSize: 12.spMin,
+                                              color: AppColor.black
+                                                  .withOpacity(0.80),
+                                            ),
+                                          ).wrapPaddingOnly(top: 5, bottom: 5),
+                                          trailing: isPressed.value
+                                              ? ValueListenableBuilder(
+                                                  valueListenable:
+                                                      isAllSelected,
+                                                  builder:
+                                                      (context, value, child) {
+                                                    return ValueListenableBuilder<
+                                                        bool>(
+                                                      valueListenable:
+                                                          checkboxStates[
+                                                              list.indexOf(
+                                                                  contact)],
+                                                      builder: (context,
+                                                          isChecked, child) {
+                                                        return Checkbox(
+                                                          activeColor: Colors
+                                                              .indigoAccent,
+                                                          shape: CircleBorder(
+                                                              eccentricity:
+                                                                  0.1.r),
+                                                          onChanged: (val) {
+                                                            checkboxStates[list
+                                                                        .indexOf(
+                                                                            contact)]
+                                                                    .value =
+                                                                val ?? false;
+                                                            isAllSelected
+                                                                .value = false;
+                                                            bool allTrue =
+                                                                checkboxStates.every(
+                                                                    (notifier) =>
+                                                                        notifier
+                                                                            .value);
+                                                            if (allTrue) {
+                                                              isAllSelected
+                                                                  .value = true;
+                                                            }
+                                                            bool containsTrue =
+                                                                checkboxStates.any(
+                                                                    (notifier) =>
+                                                                        notifier
+                                                                            .value);
+                                                            if (containsTrue) {
+                                                              isAnySelected
+                                                                  .value = true;
+                                                            } else {
+                                                              isAnySelected
+                                                                      .value =
+                                                                  false;
+                                                            }
+                                                          },
+                                                          value: isChecked,
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                )
+                                              : null,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               );
                             },
                           ),
-                          Divider(),
+                          Divider(
+                            height: 0,
+                          ).wrapPaddingOnly(bottom: 5),
                         ],
                       ),
                     );
@@ -497,12 +557,16 @@ class _ContactListPageState extends State<ContactListPage> {
             ),
           );
   }
-  //
-  // void updateSelectAll() {
-  //   bool allSelected = checkboxStates.every((notifier) => notifier.value);
-  //   print(allSelected);
-  //   isAllSelected.value = allSelected;
-  // }
+
+  List<int> getCheckedIndices() {
+    List<int> checkedIndices = [];
+    for (int i = 0; i < checkboxStates.length; i++) {
+      if (checkboxStates[i].value) {
+        checkedIndices.add(i);
+      }
+    }
+    return checkedIndices;
+  }
 
   Map<String, List<ContactData>> sortAndGroupContacts() {
     contactDataList.value.sort((a, b) => a.firstName.compareTo(b.firstName));
