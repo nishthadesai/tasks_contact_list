@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addNewCardDesc": MessageLookupByLibrary.simpleMessage(
             "Please enter your card details"),
         "addPhoto": MessageLookupByLibrary.simpleMessage("Add Photo"),
+        "addToFavorite":
+            MessageLookupByLibrary.simpleMessage("Add to favorite"),
         "alreadyHaveAccount":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "and": MessageLookupByLibrary.simpleMessage(" and "),
@@ -59,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Connection to server failed due to internet connection."),
         "contactDeletedSuccesfully":
             MessageLookupByLibrary.simpleMessage("Contact Deleted Succesfully"),
+        "contactDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Contact deleted Successfully"),
         "contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
         "cvv": MessageLookupByLibrary.simpleMessage("Cvv"),
         "cvvIsInvalid": MessageLookupByLibrary.simpleMessage("CVV is invalid"),

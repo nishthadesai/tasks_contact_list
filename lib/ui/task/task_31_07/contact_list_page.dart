@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo_structure/values/export.dart';
 import 'package:flutter_demo_structure/values/extensions/widget_ext.dart';
 import 'package:flutter_demo_structure/widget/base_app_bar.dart';
+import 'package:flutter_demo_structure/widget/show_message.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../data/my_data/contact_data.dart';
@@ -49,79 +50,114 @@ class _ContactListPageState extends State<ContactListPage> {
                         color: AppColor.grey.withOpacity(0.40),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             5.verticalSpace,
-                            Center(
-                              child: GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text(S
-                                            .of(context)
-                                            .areYouSureYouWantToDelete),
-                                        actions: [
-                                          TextButton(
-                                            child: Text(S.of(context).cancel),
-                                            onPressed: () {
-                                              appRouter.maybePop();
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    Center(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Text(S
+                                                    .of(context)
+                                                    .areYouSureYouWantToDelete),
+                                                actions: [
+                                                  TextButton(
+                                                    child: Text(
+                                                        S.of(context).cancel),
+                                                    onPressed: () {
+                                                      appRouter.maybePop();
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child:
+                                                        Text(S.of(context).ok),
+                                                    onPressed: () {
+                                                      List<int> checkedIndices =
+                                                          getCheckedIndices();
+                                                      if (checkedIndices
+                                                          .isNotEmpty) {
+                                                        setState(() {
+                                                          contactDataList.value
+                                                              .removeWhere(
+                                                                  (contact) {
+                                                            int index =
+                                                                contactDataList
+                                                                    .value
+                                                                    .indexOf(
+                                                                        contact);
+                                                            showMessage(S
+                                                                .of(context)
+                                                                .contactDeletedSuccessfully);
+                                                            return checkedIndices
+                                                                .contains(
+                                                                    index);
+                                                          });
+                                                          contactDataList
+                                                              .notifyListeners();
+                                                          appRouter.maybePop();
+                                                          isAllSelected.value =
+                                                              false;
+                                                          isAnySelected.value =
+                                                              false;
+                                                          isPressed.value =
+                                                              false;
+                                                        });
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                              );
                                             },
-                                          ),
-                                          TextButton(
-                                            child: Text(S.of(context).ok),
-                                            onPressed: () {
-                                              List<int> checkedIndices =
-                                                  getCheckedIndices();
-                                              if (checkedIndices.isNotEmpty) {
-                                                setState(() {
-                                                  contactDataList.value
-                                                      .removeWhere((contact) {
-                                                    int index = contactDataList
-                                                        .value
-                                                        .indexOf(contact);
-                                                    return checkedIndices
-                                                        .contains(index);
-                                                  });
-                                                  contactDataList
-                                                      .notifyListeners();
-                                                  appRouter.maybePop();
-                                                  isAllSelected.value = false;
-                                                  isAnySelected.value = false;
-                                                  isPressed.value = false;
-                                                  for (var contact
-                                                      in contactDataList
-                                                          .value) {
-                                                    int index = contactDataList
-                                                        .value
-                                                        .indexOf(contact);
-                                                    print("--------${index}");
-                                                  }
-                                                });
-                                              }
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Icon(
-                                  Icons.delete,
-                                  size: 20.r,
-                                  color: AppColor.red,
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.delete,
+                                          size: 20.r,
+                                          color: AppColor.red,
+                                        ),
+                                      ),
+                                    ),
+                                    3.verticalSpace,
+                                    Text(
+                                      S.of(context).delete,
+                                      style: textMedium.copyWith(
+                                        fontSize: 14.spMin,
+                                        color: AppColor.black.withOpacity(0.50),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                            3.verticalSpace,
-                            Text(
-                              S.of(context).delete,
-                              style: textMedium.copyWith(
-                                fontSize: 14.spMin,
-                                color: AppColor.black.withOpacity(0.50),
-                              ),
+                                Column(
+                                  children: [
+                                    Center(
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Icon(
+                                          Icons.favorite,
+                                          size: 20.r,
+                                          color: AppColor.red,
+                                        ),
+                                      ),
+                                    ),
+                                    3.verticalSpace,
+                                    Text(
+                                      S.of(context).addToFavorite,
+                                      style: textMedium.copyWith(
+                                        fontSize: 14.spMin,
+                                        color: AppColor.black.withOpacity(0.50),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                             5.verticalSpace,
                           ],
@@ -198,6 +234,7 @@ class _ContactListPageState extends State<ContactListPage> {
                                       contactDataList.value.length,
                                       (_) => ValueNotifier(true));
                                 } else {
+                                  isAnySelected.value = false;
                                   checkboxStates = List.generate(
                                       contactDataList.value.length,
                                       (_) => ValueNotifier(false));

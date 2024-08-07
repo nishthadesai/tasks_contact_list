@@ -137,5 +137,7 @@
   "noContactsFound": "No Contacts found",
   "areYouSureYouWantToDelete": "Are you sure! you want to delete?",
   "selectAll": "Select all",
-  "delete": "Delete"
+  "delete": "Delete",
+  "contactDeletedSuccessfully": "Contact deleted Successfully",
+  "addToFavorite": "Add to favorite"
 }

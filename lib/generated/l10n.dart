@@ -1389,6 +1389,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Contact deleted Successfully`
+  String get contactDeletedSuccessfully {
+    return Intl.message(
+      'Contact deleted Successfully',
+      name: 'contactDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add to favorite`
+  String get addToFavorite {
+    return Intl.message(
+      'Add to favorite',
+      name: 'addToFavorite',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
