@@ -139,5 +139,10 @@
   "selectAll": "Select all",
   "delete": "Delete",
   "contactDeletedSuccessfully": "Contact deleted Successfully",
-  "addToFavorite": "Add to favorite"
+  "addToFavorite": "Add to favorite",
+  "favorites": "Favorites",
+  "contactAddedSuccesfully": "Contact added succesfully",
+  "contactUpdatedSuccesfully": "Contact updated succesfully",
+  "removeFromFavorites": "Remove from Favorites",
+  "addToFavorites": "Add to favorites"
 }

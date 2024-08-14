@@ -31,6 +31,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addPhoto": MessageLookupByLibrary.simpleMessage("Add Photo"),
         "addToFavorite":
             MessageLookupByLibrary.simpleMessage("Add to favorite"),
+        "addToFavorites":
+            MessageLookupByLibrary.simpleMessage("Add to favorites"),
         "alreadyHaveAccount":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "and": MessageLookupByLibrary.simpleMessage(" and "),
@@ -59,10 +61,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "connectionToServerFailedDueToInternetConnection":
             MessageLookupByLibrary.simpleMessage(
                 "Connection to server failed due to internet connection."),
+        "contactAddedSuccesfully":
+            MessageLookupByLibrary.simpleMessage("Contact added succesfully"),
         "contactDeletedSuccesfully":
             MessageLookupByLibrary.simpleMessage("Contact Deleted Succesfully"),
         "contactDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Contact deleted Successfully"),
+        "contactUpdatedSuccesfully":
+            MessageLookupByLibrary.simpleMessage("Contact updated succesfully"),
         "contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
         "cvv": MessageLookupByLibrary.simpleMessage("Cvv"),
         "cvvIsInvalid": MessageLookupByLibrary.simpleMessage("CVV is invalid"),
@@ -95,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Expiry month is invalid"),
         "expiryYearIsInvalid":
             MessageLookupByLibrary.simpleMessage("Expiry year is invalid"),
+        "favorites": MessageLookupByLibrary.simpleMessage("Favorites"),
         "fillDetails": MessageLookupByLibrary.simpleMessage(
             "Fill your below detail to create account"),
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
@@ -201,6 +208,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Privacy Policy."),
         "receiveTimeout":
             MessageLookupByLibrary.simpleMessage("Receive timeout"),
+        "removeFromFavorites":
+            MessageLookupByLibrary.simpleMessage("Remove from Favorites"),
         "requestCantBeHandledForNowPleaseTryAfterSometime":
             MessageLookupByLibrary.simpleMessage(
                 "Request can\'t be handled for now. Please try after sometime."),

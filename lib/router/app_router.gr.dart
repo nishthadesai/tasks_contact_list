@@ -21,7 +21,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: AddContactPage(
           contactData: args.contactData,
-          index: args.index,
+          id: args.id,
         ),
       );
     },
@@ -64,14 +64,14 @@ class AddContactRoute extends PageRouteInfo<AddContactRouteArgs> {
   AddContactRoute({
     Key? key,
     required ContactData? contactData,
-    int? index,
+    int? id,
     List<PageRouteInfo>? children,
   }) : super(
           AddContactRoute.name,
           args: AddContactRouteArgs(
             key: key,
             contactData: contactData,
-            index: index,
+            id: id,
           ),
           initialChildren: children,
         );
@@ -86,18 +86,18 @@ class AddContactRouteArgs {
   const AddContactRouteArgs({
     this.key,
     required this.contactData,
-    this.index,
+    this.id,
   });
 
   final Key? key;
 
   final ContactData? contactData;
 
-  final int? index;
+  final int? id;
 
   @override
   String toString() {
-    return 'AddContactRouteArgs{key: $key, contactData: $contactData, index: $index}';
+    return 'AddContactRouteArgs{key: $key, contactData: $contactData, id: $id}';
   }
 }
 

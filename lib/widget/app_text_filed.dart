@@ -45,6 +45,7 @@ class AppTextField extends StatelessWidget {
   final BoxConstraints? suffixIconConstraints;
   final bool? isDense;
   final bool? expands;
+  final bool? autoFocus;
   final BorderRadius? borderRadius;
   final Color? fillColor;
   const AppTextField({
@@ -92,11 +93,13 @@ class AppTextField extends StatelessWidget {
     this.expands,
     this.minLines,
     this.fillColor,
+    this.autoFocus,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: autoFocus ?? false,
       expands: expands ?? false,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       initialValue: initValue,
@@ -208,7 +211,7 @@ class AppTextField extends StatelessWidget {
         FocusScope.of(context).requestFocus(nextFocusNode);
         break;
       default:
-        null;
+        FocusScope.of(context).unfocus();
         break;
     }
   }

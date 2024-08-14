@@ -1409,6 +1409,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Favorites`
+  String get favorites {
+    return Intl.message(
+      'Favorites',
+      name: 'favorites',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact added succesfully`
+  String get contactAddedSuccesfully {
+    return Intl.message(
+      'Contact added succesfully',
+      name: 'contactAddedSuccesfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact updated succesfully`
+  String get contactUpdatedSuccesfully {
+    return Intl.message(
+      'Contact updated succesfully',
+      name: 'contactUpdatedSuccesfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove from Favorites`
+  String get removeFromFavorites {
+    return Intl.message(
+      'Remove from Favorites',
+      name: 'removeFromFavorites',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add to favorites`
+  String get addToFavorites {
+    return Intl.message(
+      'Add to favorites',
+      name: 'addToFavorites',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

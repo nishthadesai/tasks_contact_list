@@ -3,14 +3,26 @@ class Assets {
   Assets._();
 
   static const String fontsRotundaBold = 'assets/fonts/Rotunda-Bold.otf';
+  static const String imageAddIcon = 'assets/image/add_icon.png';
   static const String imageAddUser = 'assets/image/add_user.png';
   static const String imageArrowDown = 'assets/image/arrow_down.png';
   static const String imageBack = 'assets/image/back.png';
   static const String imageCheckedBox = 'assets/image/checked_box.png';
   static const String imageEmail = 'assets/image/email.png';
+  static const String imageInstaLogo = 'assets/image/insta_logo.png';
+  static const String imageInstaStoryOne = 'assets/image/insta_story_one.png';
+  static const String imageInstaStoryThree =
+      'assets/image/insta_story_three.png';
+  static const String imageInstaStoryTwo = 'assets/image/insta_story_two.png';
+  static const String imageLikeIcon = 'assets/image/like_icon.png';
   static const String imageMobile = 'assets/image/mobile.png';
   static const String imageNoDataFound = 'assets/image/no_data_found.gif';
   static const String imagePassword = 'assets/image/password.png';
+  static const String imagePostOne = 'assets/image/post_one.jpeg';
+  static const String imagePostOneProfile =
+      'assets/image/post_one_profile.jpeg';
   static const String imageProfile = 'assets/image/profile.png';
+  static const String imageProfilePic = 'assets/image/profile_pic.png';
+  static const String imageSendIcon = 'assets/image/send_icon.png';
   static const String imageUser = 'assets/image/user.png';
 }
